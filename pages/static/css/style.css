@@ -1,0 +1,27 @@
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: 15px;
+  scroll-padding-top: 40px;
+}
+
+body {
+  margin-bottom: 100px;
+  word-wrap: break-word;
+}
+
+img {
+  max-width: 100%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 100000;
+}
+
+.navbar-brand img {
+  height: 40px;
+  max-height: 100%;
+}

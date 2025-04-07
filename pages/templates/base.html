@@ -1,0 +1,164 @@
+{% from "helpers/header.html" import header %}
+{% from "helpers/tick.html" import tick, custom_tick %}
+{% from "helpers/pagination.html" import render_pagination %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block meta %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Tra cứu phạt nguội" property="og:title">
+    <meta content="Cổng tra cứu phạt nguội tự động" property="og:description">
+    <meta content="https://phatnguoi.tunaa.io.vn/" property="og:url">
+    <meta content="https://i.namu.wiki/i/4CrxZLtJKTSjx-RRkEG0KsBQhNtYrFyWCBcyx1A3WoMLNzcZVJ90L0x9vp0SGSCQaN0QGxNikg0sbLWkdrNsaQ.webp" property="og:image">
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="#4258ff" data-react-helmet="true" name="theme-color">
+    {% endblock %}
+
+    <title>{% block title %}{% endblock %} - PhatNguoiAPI</title>
+    
+    {% block head_css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% endblock %}
+    
+    {% block favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicons/favicon.ico') }}">
+    {% endblock %}
+
+    {% block additional_styles %}{% endblock %}
+  </head>
+
+  <body class="has-navbar-fixed-top">
+    {% block navbar %}
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item py-0 " href="{{ url_for('main_blueprint.homepage') }}">
+          <img src="{{ url_for('static', filename='img/phatnguoi_api-logo.png') }}" alt="phatnguoi_api-logo">
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="tomchienxu-navbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="tomchienxu-navbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="{{ url_for('main_blueprint.homepage') }}">
+            Trang chủ
+          </a>    
+          <a class="navbar-item">
+            Tra cứu
+          </a>    
+          <a class="navbar-item">
+            Cách hoạt động
+          </a>
+          <a class="navbar-item" href="{{ url_for('api.phatnguoi', bien_so_xe='30K13784', loai_xe=1) }}">
+            API
+          </a>
+          <a class="navbar-item" href="https://github.com/dookkii/PhatNguoi">
+            Mã nguồn
+            <span>
+              <sup>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </sup>
+            </span>
+          </a>
+          <a class="navbar-item" href="https://github.com/dookkii">
+            Github
+            <span>
+              <sup>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </sup>
+            </span>
+          </a>
+        </div>
+    
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-link">
+                Đăng ký
+              </a>
+              <a class="button is-light">
+                Đăng nhập
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+  
+    <section class="section">
+      <div class="container">
+        {% block body %}{% endblock %}
+      </div>
+    </section>
+
+    {% block footer %}
+    <footer class="footer py-5">
+      <div class="content">
+        <div class="is-flex-desktop is-justify-content-space-between is-align-items-center">
+          <div class="has-text-centered-touch">
+            <span>
+              March, 2025 // Developed by <a class="is-underlined" href="https://github.com/dookkii"><b>dookkii</b></a> with 💖.
+              <br>
+              Whipped this up out of sheer boredom and existential dread.
+            </span>
+          </div>
+          
+          <div class="has-text-right-desktop has-text-centered-touch">
+            <div class="mt-2 is-hidden-desktop"></div>
+
+            <span class="icon-text">
+              <span><a href="https://github.com/dookkii">Github</a></span>
+              <span class="icon">
+                <i class="fa-brands fa-github"></i>
+              </span>
+            </span>
+
+            <br class="is-hidden-touch">
+            
+            <span class="icon-text">
+              <span><a href="https://facebook.com/mygfwouldbesomewhere">Facebook</a></span>
+              <span class="icon">
+                <i class="fa-brands fa-facebook"></i>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+    {% endblock %}
+  
+    <script>
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+      
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+      
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+      
+          });
+        });
+      
+      });
+    </script>
+  </body>
+</html>

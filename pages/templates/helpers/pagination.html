@@ -1,0 +1,27 @@
+{% macro render_pagination(pagination, endpoint) %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+      <a class="page-link" href="{% if pagination.has_prev %}{{ url_for(endpoint, page=pagination.prev_num) }}{% else %}/{% endif %}" rel="keep-params">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% for page_index in pagination.iter_pages() %}
+    {% if page_index %}
+    <li class="page-item {% if page_index == pagination.page %}active{% endif %}">
+      <a class="page-link" href="{{ url_for(endpoint, page=page_index) }}" rel="keep-params">{{ page_index }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a href="#a-lot-of-pages" class="page-link unselectable">...</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+      <a class="page-link" href="{% if pagination.has_next %}{{ url_for(endpoint, page=pagination.next_num) }}{% else %}/{% endif %}" rel="keep-params">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+{% endmacro %}

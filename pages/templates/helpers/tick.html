@@ -1,0 +1,40 @@
+{% set icon_set = {
+  "square": {
+    "true": "bi-check-square",
+    "false": "bi-x-square"
+  }, 
+  "circle": {
+    "true": "bi-check-circle",
+    "false": "bi-x-circle"
+  },
+  "square-fill": {
+    "true": "bi-check-square-fill",
+    "false": "bi-x-square-fill"
+  }, 
+  "circle-fill": {
+    "true": "bi-check-circle-fill",
+    "false": "bi-x-circle-fill"
+  }, 
+  "default": {
+    "true": "bi-check-lg",
+    "false": "bi-x-lg"
+  }
+} %}
+
+{% set current_icon_set = "square" %}
+
+{% macro tick(tester = 0) %}
+{% if tester %}
+<i class="bi {{ icon_set[current_icon_set].true }}" style="color: green"></i>
+{% else %}
+<i class="bi {{ icon_set[current_icon_set].false }}" style="color: red"></i>
+{% endif %}
+{% endmacro %}
+
+{% macro custom_tick(tester = 0, tick_true=icon_set[current_icon_set].true, tick_false=icon_set[current_icon_set].false) %}
+{% if tester %}
+<i class="bi {{ tick_true | safe }}" style="color: green"></i>
+{% else %}
+<i class="bi {{ tick_false | safe }}" style="color: red"></i>
+{% endif %}
+{% endmacro %}

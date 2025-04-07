@@ -1,0 +1,7 @@
+flask
+flask-restful
+requests
+beautifulsoup4
+pillow
+pytesseract
+python-dotenv

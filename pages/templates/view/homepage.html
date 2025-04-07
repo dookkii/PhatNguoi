@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Tra cứu phạt nguội{% endblock %}
+
+{% block body %}
+<div class="has-text-centered mb-5">
+  <h1 class="title mb-2">
+    Cổng tra cứu phạt nguội tự động 
+  </h1>
+  <p class="subtitle">
+    Tra cứu thông tin phạt nguội trực tiếp từ <b>Cục Cảnh sát Giao thông</b>
+  </p>
+</div>
+
+<div class="message is-link mt-5">
+  <div class="message-header">Cảm ơn! 🗣️🐧🔥</div>
+  <div class="message-body">
+    <p>
+      Đây chỉ là một dự ản nho nhỏ mình làm ra trong lúc rảnh rỗi, vậy nên website này có thể skibidi, sẽ không thể hoạt động 24/7 hoặc có thể sẽ không hoạt động trong một khoảng thời gian nào đó. Nếu bạn thấy website này không hoạt động, hãy thử lại sau nhé!
+    </p>
+
+    <p>
+      Nếu muốn sử dụng dịch vụ tra phạt nguội mọi lúc mọi nơi, hay thông báo Email/Zalo, các bạn có thể tham khảo một vài dịch vụ khác như <a href="https://autobot.site"><b><u>autobot.site</u></b></a> và <a href="https://phatnguoi.com"><b><u>phatnguoi.com</u></b></a>.
+    </p>
+    <br>
+    <p>
+      <i>
+        *Dữ liệu được trích xuất trực tiếp từ <a href="https://csgt.vn"><b><u>csgt.vn</u></b></a> theo thời gian thực, hoàn toàn chính xác nhe :>
+      </i>
+    </p>
+  </div>
+</div>
+
+<div class="py-5">
+  <form method="POST">
+    <div class="columns">
+      <div class="column is-8">
+        <div class="field">
+          <label class="label">Biển kiểm soát:</label>
+          <div class="control">
+            <input name="bien-so-xe" class="input" type="text" placeholder="Nhập biển kiểm soát...">
+          </div>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="field ">
+          <label class="label">Loại xe:</label>
+          <div class="control">
+            <div class="select is-fullwidth">
+              <select name="loai-xe">
+                <option value="1">Xe ô tô</option>
+                <option value="2">Xe máy</option>
+                <option value="3">Xe đạp điện</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <input type="submit" value="TRA CỨU" class="button is-link is-fullwidth">
+    </div>
+  </form>
+
+  <div class="card mt-5">
+    <div class="card-content">
+      <div class="content">
+        <b>Developers' notes:</b> Một vài biển số xe ô tô cho mọi người nghịch: <b class="has-text-link">30X7431, 30K13784</b>.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

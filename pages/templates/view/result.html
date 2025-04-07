@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Tra cứu phạt nguội{% endblock %}
+
+{% block body %}
+<div class="has-text-centered mb-5">
+  <h1 class="title mb-2">
+    Cổng tra cứu phạt nguội tự động 
+  </h1>
+  <p class="subtitle">
+    Tra cứu thông tin phạt nguội trực tiếp từ <b>Cục Cảnh sát Giao thông</b>
+  </p>
+</div>
+
+<div class="p-5">
+  <a href="{{ url_for('main_blueprint.homepage') }}" class="button is-link is-fullwidth">TRA CỨU BIỂN SỐ KHÁC</a>
+</div>
+
+<div class="p-5 has-text-centered">
+  <div class="card">
+    <div class="card-content">
+      <div class="content">
+        {% if data is none %}
+        <p class="has-text-danger is-size-4">
+          <b>Không thể tra cứu được dữ liệu!</b>
+        </p>
+        <hr>
+        <span>Có lỗi đã xảy ra trong quá trình tra cứu dữ liệu do website CSGT.vn hiện không truy cập được. Vui lòng thử lại sau vài tiếng!</span>
+        {% elif data.violations is none %}
+        <p class="has-text-danger is-size-4">
+          <b>Không thể tra cứu được dữ liệu!</b>
+        </p>
+        <hr>
+        <span>Có lỗi đã xảy ra trong quá trình giải Captcha (vượt quá số lần được hạn mức sẵn bởi Admin). Vui lòng thử tra lại một lần nữa!</span>
+        {% else %}
+          {% if data.total %}
+          <p class="has-text-danger is-size-4">
+            <b>Biển số {{ data.number_plate }} đã phát hiện {{ data.violations | length }} vi phạm!</b>
+          </p>
+          <div>
+            <span class="tag is-success is-large py-2 mx-3 mt-2" style="height: 100%;">
+              <span>
+                <b>{{ data.number_of_paid }} vi phạm</b>
+                <br>
+                đã xử phạt
+              </span>
+            </span>
+            <span class="tag is-warning is-large py-2 mx-3 mt-2" style="height: 100%;">
+              <span>
+                <b>{{ data.number_of_unpaid }} vi phạm</b>
+                <br>
+                chưa xử phạt
+              </span>
+            </span>
+          </div>
+          {% else %}
+          <p class="has-text-success is-size-4">
+            <b>Biển số {{ data.number_plate }} chưa phát hiện lỗi vi phạm!</b>
+          </p>
+          {% endif %}
+          <hr>
+
+          <span>Thời gian cập nhật dữ liệu: <b>{{ data.time }}</b></span>
+          <br>
+          <span>Nguồn dữ liệu: <b>{{ data.source }}</b></span>
+
+          <hr>
+
+          {% if data.total %}
+          <div class="table-container has-text-left">
+            <table class="table is-striped is-bordered is-hoverable is-fullwidth">
+              <tbody>
+                {% for violation in data.violations %}
+                <tr class="is-bordered">
+                  <th class="has-text-centered is-size-4" colspan="2">VI PHẠM #{{ loop.index }}</th>
+                </tr>
+
+                  {% for row in violation.items() %}
+                  <tr>
+                    <td class="is-vcentered">
+                      <b>
+                        {% if row[0] == "bien_kiem_soat" %}
+                          Biển kiểm soát:
+                        {% elif row[0] == "mau_bien" %}
+                          Màu biển:
+                        {% elif row[0] == "loai_phuong_tien" %}
+                          Loại phương tiện:
+                        {% elif row[0] == "thoi_gian_vi_pham" %}
+                          Thời gian vi phạm:
+                        {% elif row[0] == "dia_diem_vi_pham" %}
+                          Địa điểm vi phạm:
+                        {% elif row[0] == "hanh_vi_vi_pham" %}
+                          Hành vi vi phạm:
+                        {% elif row[0] == "trang_thai" %}
+                          Trạng thái:
+                        {% elif row[0] == "don_vi_phat_hien_vi_pham" %}
+                          Đơn vị phát hiện vi phạm:
+                        {% elif row[0] == "noi_giai_quyet_vu_viec" %}
+                          Nơi giải quyết vụ việc:
+                        {% endif %}
+                      </b>
+                    </td>
+
+                    <td class="is-vcentered">
+                      {% if row[0] == "trang_thai" %}
+                        {% if row[1] == "Chưa xử phạt" %}
+                        <span class="tag is-warning">
+                        {{ row[1]}}
+                        </span>
+                        {% else %}
+                        <span class="tag is-success">
+                          {{ row[1]}}
+                          </span>  
+                        {% endif %}
+                      {% elif row[0] == "noi_giai_quyet_vu_viec" %}
+                        {% for item in row[1] %}
+                          {{ item }}{% if not loop.last %}<br>{% endif %}
+                        {% endfor %}
+                      {% else %}
+                        {{ row[1] }}
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <p>
+            Hiện tại, trên hệ thống chưa có thông tin vi phạm nào của biển số này.
+          </p>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
