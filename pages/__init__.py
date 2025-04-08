@@ -1,3 +1,4 @@
+from os import getenv
 from flask import Flask
 from flask import abort
 from flask import request
@@ -19,6 +20,7 @@ load_dotenv()
 app = Flask(__name__, subdomain_matching=True)
 api = Api(api_blueprint.blueprint, prefix=f"/v{API_VERSION}")
 
+app.config["SECRET_KEY"] = getenv("SECRET_KEY")
 app.config["SERVER_NAME"] = SERVER_NAME
 app.config["RESTFUL_JSON"] = RESTFUL_JSON_SETTINGS
 
