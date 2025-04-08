@@ -69,9 +69,15 @@ pip install -r requirements.txt
   image_to_string = image_to_string_easy_ocr
   ```
 
-7. Change the settings in ```settings.py``` to match your needs (these settings will only be used in development environment).
+7. Create a file named `local_settings.py` and customize the settings as needed.
+- The configurations in `local_settings.py` will override those in `settings.py`. Avoid modifying `settings.py` directly to prevent conflicts with future updates from our GitHub repository
 
 ## Deployment Instructions
-- To deploy the app, you can use `gunicorn` or any WSGI servers you want to. Follow their steps and integrate it with `nginx` to make the server online.
-- We have already provided the `wsgi.py` file, you can take advantage of it.
-- This section will be extended and more details in the future for easier navigation.
+To deploy the application, follow these steps:
+1. **Choose a WSGI Server**: Use a WSGI server like `gunicorn` or any other of your choice to serve the application.
+2. **Integrate with Nginx**: Configure Nginx as a reverse proxy to route traffic to your WSGI server. Also you could use nginx as a static file provider. This ensures better performance and security.
+3. **`wsgi.py` file**: The repository includes a `wsgi.py` file to simplify deployment. You can use it directly with your WSGI server.
+
+This section will be updated with more detailed instructions and examples to streamline the deployment process.
+
+For now, refer to the official documentation of your chosen WSGI server and Nginx for specific setup instructions.
