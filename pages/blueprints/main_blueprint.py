@@ -7,6 +7,8 @@ from helpers.flask_utility import TomChienXuOJ_render_template as render_templat
 from helpers.custom_thread import TomChienXuOJThread
 from handlers.violation import safely_get_violations
 
+from forms import ViolationLookupForm
+
 blueprint = Blueprint("main", __name__)
 
 # TomChienXu Note: This is used for serving static files in Flask
@@ -17,9 +19,11 @@ def static(filename):
 
 @blueprint.route("/", methods=["GET", "POST"])
 def homepage():
-  if request.method == "POST":
-    bien_so_xe = request.form.get("bien-so-xe")
-    loai_xe = request.form.get("loai-xe")
+  form = ViolationLookupForm()
+
+  if form.validate_on_submit():
+    bien_so_xe = form.number_plate.data
+    loai_xe = form.vehicle_type.data
 
     if not all([bien_so_xe, loai_xe]):
       return redirect(url_for("main.homepage"))
@@ -48,4 +52,4 @@ def homepage():
 
     return render_template("view/result.html", data=data)
 
-  return render_template("view/homepage.html")
+  return render_template("view/homepage.html", form=form)

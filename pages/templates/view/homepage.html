@@ -33,25 +33,23 @@
 
 <div class="py-5">
   <form method="POST">
+    {{ form.csrf_token }}
+
     <div class="columns">
       <div class="column is-8">
         <div class="field">
-          <label class="label">Biển kiểm soát:</label>
+          <label class="label">{{ form.number_plate.label }}:</label>
           <div class="control">
-            <input name="bien-so-xe" class="input" type="text" placeholder="Nhập biển kiểm soát...">
+            {{ form.number_plate(class="input", placeholder="Nhập biển kiểm soát...") }}
           </div>
         </div>
       </div>
       <div class="column is-4">
         <div class="field ">
-          <label class="label">Loại xe:</label>
+          <label class="label">{{ form.vehicle_type.label }}:</label>
           <div class="control">
             <div class="select is-fullwidth">
-              <select name="loai-xe">
-                <option value="1">Xe ô tô</option>
-                <option value="2">Xe máy</option>
-                <option value="3">Xe đạp điện</option>
-              </select>
+              {{ form.vehicle_type() }}
             </div>
           </div>
         </div>
