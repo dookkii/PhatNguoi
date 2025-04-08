@@ -7,7 +7,7 @@ from dotenv import set_key
 
 def run_application():
   deploy_kwargs = {
-    "host": DOMAIN,
+    "host": HOST,
     "port": PORT,
     "debug": DEBUG_STATUS,
     "ssl_context": SSL_CONTEXT_TO_USE,

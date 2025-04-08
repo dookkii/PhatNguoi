@@ -1,14 +1,12 @@
-DOMAIN = "localhost"
-SERVER_NAME = "localhost"
+HOST = ""
+SERVER_NAME = ""
 PORT = 80
-DEBUG_STATUS = True
+DEBUG_STATUS = False
 USE_SSL_CONTEXT_ON_MAIN_SERVER = False
 SSL_CONTEXT = ("server.pem", "server-key.pem")
 SSL_CONTEXT_TO_USE = SSL_CONTEXT if USE_SSL_CONTEXT_ON_MAIN_SERVER else None
 USE_EVAL_EXECUTIONS = False
-ALLOWED_HOST = [
-  "0.0.0.0"
-]
+ALLOWED_HOST = []
 DATABASE_FILENAME = "database"
 
 API_VERSION = 1
@@ -16,12 +14,9 @@ RESTFUL_JSON_SETTINGS = {
   "ensure_ascii": False
 }
 
-# TESSERACT_CMD = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 TESSERACT_CMD = None
-CAPTCHA_IMAGE_PATH = "img/captcha.png"
-CUSTOM_SESSION_HEADER = {
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
-}
+CAPTCHA_IMAGE_PATH = ""
+CUSTOM_SESSION_HEADER = {}
 # TomChienXu Note: You can change this to whatever you want.
 # This will be used as soon as the session is initialized.
 # STATIC_SESSION_COOKIE_PHPSESSID = "a4ipsbe4jfv5qu8avhgb5o0ut3"
@@ -39,3 +34,16 @@ IP_CLIENT = "9.9.9.91"
 C_URL = "https://www.csgt.vn/tra-cuu-phuong-tien-vi-pham.html"
 CAPTCHA_URL = "https://www.csgt.vn/lib/captcha/captcha.class.php"
 POST_DATA_URL = "https://www.csgt.vn/?mod=contact&task=tracuu_post&ajax"
+
+# TomChienXu Note: local_settings.py loader.
+try:
+  from os import path
+
+  with open(path.join(
+    path.dirname(__file__),
+    "local_settings.py"
+  )) as file:
+    exec(file.read(), globals())
+
+except IOError:
+  pass
