@@ -32,7 +32,7 @@
 </div>
 
 <div class="py-5">
-  <form method="POST">
+  <form method="POST" id="lookup-form">
     {{ form.csrf_token }}
 
     <div class="columns">
@@ -57,7 +57,7 @@
     </div>
     
     <div>
-      <input type="submit" value="TRA CỨU" class="button is-link is-fullwidth">
+      <input type="submit" value="TRA CỨU" class="button is-link is-fullwidth" id="lookup-form-submit">
     </div>
   </form>
 
@@ -69,4 +69,13 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+  document.querySelector("#lookup-form").addEventListener("submit", () => {
+    let submitButton = document.querySelector("#lookup-form-submit");
+    submitButton.disabled = true;
+  })
+</script>
 {% endblock %}
