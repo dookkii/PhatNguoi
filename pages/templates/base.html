@@ -22,11 +22,11 @@
     {% block head_css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='css/style.css') }}">
     {% endblock %}
     
     {% block favicon %}
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicons/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('main.static', filename='img/favicons/favicon.ico') }}">
     {% endblock %}
 
     {% block additional_styles %}{% endblock %}
@@ -36,8 +36,8 @@
     {% block navbar %}
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item py-0 " href="{{ url_for('main_blueprint.homepage') }}">
-          <img src="{{ url_for('static', filename='img/phatnguoi_api-logo.png') }}" alt="phatnguoi_api-logo">
+        <a class="navbar-item py-0 " href="{{ url_for('main.homepage') }}">
+          <img src="{{ url_for('main.static', filename='img/phatnguoi_api-logo.png') }}" alt="phatnguoi_api-logo">
         </a>
     
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="tomchienxu-navbar">
@@ -50,7 +50,7 @@
     
       <div id="tomchienxu-navbar" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="{{ url_for('main_blueprint.homepage') }}">
+          <a class="navbar-item" href="{{ url_for('main.homepage') }}">
             Trang chủ
           </a>    
           <a class="navbar-item">

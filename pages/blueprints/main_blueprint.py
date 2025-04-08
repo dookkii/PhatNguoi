@@ -7,7 +7,13 @@ from helpers.flask_utility import TomChienXuOJ_render_template as render_templat
 from helpers.custom_thread import TomChienXuOJThread
 from handlers.violation import safely_get_violations
 
-blueprint = Blueprint("main_blueprint", __name__)
+blueprint = Blueprint("main", __name__)
+
+# TomChienXu Note: This is used for serving static files in Flask
+# when using subdomains, also for supporting static file of nginx.
+@blueprint.route("/static/<path:filename>")
+def static(filename):
+  return redirect(f"/static/{filename}")
 
 @blueprint.route("/", methods=["GET", "POST"])
 def homepage():
@@ -16,7 +22,7 @@ def homepage():
     loai_xe = request.form.get("loai-xe")
 
     if not all([bien_so_xe, loai_xe]):
-      return redirect(url_for("main_blueprint.homepage"))
+      return redirect(url_for("main.homepage"))
     
     thread = TomChienXuOJThread(target=safely_get_violations, args=(bien_so_xe, loai_xe))
     thread.start()
