@@ -31,7 +31,25 @@
   </div>
 </div>
 
-<div class="py-5">
+{% if errors | length > 0 %}
+<article class="message is-danger">
+  <div class="message-body">
+    {% for field, errors_of_field in errors.items() %}
+      <b>{{ field }}</b>:
+      <ul>
+        {% for error in errors_of_field %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% if not loop.last %}
+      <br>
+      {% endif %}
+    {% endfor %}
+  </div>
+</article>
+{% endif %}
+
+<div class="py-5">  
   <form method="POST" id="lookup-form">
     {{ form.csrf_token }}
 
@@ -55,9 +73,15 @@
         </div>
       </div>
     </div>
-    
+
+    {% if USE_RECAPTCHA %}
+    <div class="has-text-centered mb-5">
+      {{ form.recaptcha() }}
+    </div> 
+    {% endif %}
+
     <div>
-      <input type="submit" value="TRA CỨU" class="button is-link is-fullwidth" id="lookup-form-submit">
+      {{ form.submit(class="button is-link is-fullwidth", id="lookup-form-submit") }}
     </div>
   </form>
 
