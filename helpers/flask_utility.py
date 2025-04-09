@@ -2,7 +2,11 @@ from flask import request
 from flask import render_template
 from flask import redirect
 
-default_keyword_arguments = {}
+from settings import USE_RECAPTCHA
+
+default_keyword_arguments = {
+  "USE_RECAPTCHA": USE_RECAPTCHA
+}
 
 def TomChienXuOJ_render_template(*args, **kwargs):
   return render_template(*args, **default_keyword_arguments, **kwargs)

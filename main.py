@@ -21,6 +21,8 @@ if __name__ == "__main__":
   try:
     env_path.touch(exist_ok=False)
     set_key(env_path, "SECRET_KEY", "6969696969")
+    set_key(env_path, "RECAPTCHA_PUBLIC_KEY", "skibididopdopyesyesaaaa")
+    set_key(env_path, "RECAPTCHA_PRIVATE_KEY", "skibididopdopyesyesaaaa")
   except FileExistsError:
     pass
   except Exception as error:

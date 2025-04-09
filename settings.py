@@ -17,6 +17,18 @@ RESTFUL_JSON_SETTINGS = {
 SUBDOMAIN_API = "api"
 SUBDOMAIN_MAIN_PAGE = None
 
+USE_RECAPTCHA = True
+RECAPTCHA_PARAMETERS = {
+  "hl": "en",
+  "render": "onload"
+}
+RECAPTCHA_DATA_ATTRS = {
+  "theme": "dark"
+}
+RECAPTCHA_SCRIPT = "https://www.google.com/recaptcha/api.js"
+RECAPTCHA_DIV_CLASS = "g-recaptcha"
+RECAPTCHA_VERIFY_SERVER = "https://www.google.com/recaptcha/api/siteverify"
+
 TESSERACT_CMD = None
 CAPTCHA_IMAGE_PATH = ""
 CUSTOM_SESSION_HEADER = {}

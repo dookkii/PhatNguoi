@@ -7,7 +7,10 @@ from helpers.flask_utility import TomChienXuOJ_render_template as render_templat
 from helpers.custom_thread import TomChienXuOJThread
 from handlers.violation import safely_get_violations
 
+from settings import USE_RECAPTCHA
+
 from forms import ViolationLookupForm
+from forms import ViolationLookupFormWithRecaptcha
 
 blueprint = Blueprint("main", __name__)
 
@@ -19,14 +22,14 @@ def static(filename):
 
 @blueprint.route("/", methods=["GET", "POST"])
 def homepage():
-  form = ViolationLookupForm()
+  if USE_RECAPTCHA:
+    form = ViolationLookupFormWithRecaptcha()
+  else:
+    form = ViolationLookupForm()
 
   if form.validate_on_submit():
     bien_so_xe = form.number_plate.data
     loai_xe = form.vehicle_type.data
-
-    if not all([bien_so_xe, loai_xe]):
-      return redirect(url_for("main.homepage"))
     
     thread = TomChienXuOJThread(target=safely_get_violations, args=(bien_so_xe, loai_xe))
     thread.start()
@@ -52,4 +55,15 @@ def homepage():
 
     return render_template("view/result.html", data=data)
 
-  return render_template("view/homepage.html", form=form)
+  fields = [
+    form.number_plate,
+    form.vehicle_type,
+  ]
+  if USE_RECAPTCHA:
+    fields.append(form.recaptcha)
+    
+  errors = {
+    field.label: field.errors for field in fields if field.errors
+  }
+
+  return render_template("view/homepage.html", form=form, errors=errors)

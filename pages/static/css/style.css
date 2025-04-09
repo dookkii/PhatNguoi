@@ -25,3 +25,7 @@ footer {
   height: 40px;
   max-height: 100%;
 }
+
+.g-recaptcha {
+  display: inline-block;
+}
