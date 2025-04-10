@@ -17,7 +17,7 @@ RESTFUL_JSON_SETTINGS = {
 SUBDOMAIN_API = "api"
 SUBDOMAIN_MAIN_PAGE = None
 
-USE_RECAPTCHA = True
+USE_RECAPTCHA = False
 RECAPTCHA_PARAMETERS = {
   "hl": "en",
   "render": "onload"
