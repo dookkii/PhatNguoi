@@ -1,3 +1,6 @@
+from gevent import monkey
+monkey.patch_all()
+
 from settings import *
 from helpers import *
 from pages import app

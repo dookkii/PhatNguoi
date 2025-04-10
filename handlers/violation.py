@@ -1,7 +1,7 @@
 from io import BytesIO
 from bs4 import BeautifulSoup
 from PIL import Image
-from time import sleep
+from gevent import sleep
 from datetime import datetime
 
 from settings import CAPTCHA_URL
