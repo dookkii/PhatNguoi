@@ -2,7 +2,7 @@ from io import BytesIO
 from bs4 import BeautifulSoup
 from PIL import Image
 from gevent import sleep
-from datetime import datetime
+from arrow import now
 
 from settings import CAPTCHA_URL
 from settings import SAVE_LAST_CAPTCHA_IMAGE
@@ -16,6 +16,7 @@ from settings import POST_DATA_URL
 from settings import SOLVE_CAPTCHA_MANUALLY
 from settings import DELAY_AFTER_WRONG_CAPTCHA
 from settings import MAX_CAPTCHA_ATTEMPTS
+from settings import TIMEZONE
 from helpers import unaccent_word
 from helpers.custom_session import get_new_session
 from handlers.image_to_text import image_to_string  
@@ -134,7 +135,7 @@ def safely_get_violations(bien_so_xe, loai_xe):
   for index in range(MAX_CAPTCHA_ATTEMPTS):
     session.post_solve_session_captcha(SOLVE_CAPTCHA_MANUALLY)
 
-    session_time = datetime.now()
+    session_time = now(TIMEZONE)
     session.post_vehicle_data()
 
     if session.solved_captcha:
@@ -148,7 +149,7 @@ def safely_get_violations(bien_so_xe, loai_xe):
   
   session.handle_data()
   return dict(
-    time=session_time.strftime("%d-%m-%Y %H:%M:%S"),
+    time=session_time.format(),
     source=DEFAULT_DATA_SOURCE,
     number_plate=bien_so_xe,
     vehicle_type=loai_xe,
