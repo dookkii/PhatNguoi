@@ -34,9 +34,6 @@ def my_number_plate():
   else:
     form = UserNumberPlate()
 
-  form.number_plate.data = current_user.number_plate
-  form.vehicle_type.default = current_user.vehicle_type
-
   if form.validate_on_submit():
     user = User.query.get(current_user.id)
     user.number_plate = form.number_plate.data
