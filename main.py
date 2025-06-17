@@ -1,7 +1,9 @@
-from gevent import monkey
-monkey.patch_all()
-
 from settings import *
+
+if USE_GEVENT:
+  from gevent import monkey
+  monkey.patch_all()
+
 from helpers import *
 from pages import app
 
@@ -26,6 +28,8 @@ if __name__ == "__main__":
     set_key(env_path, "SECRET_KEY", "6969696969")
     set_key(env_path, "RECAPTCHA_PUBLIC_KEY", "skibididopdopyesyesaaaa")
     set_key(env_path, "RECAPTCHA_PRIVATE_KEY", "skibididopdopyesyesaaaa")
+    set_key(env_path, "OAUTH2_CLIENT_ID", "skibididopdopyesyesaaaa")
+    set_key(env_path, "OAUTH2_CLIENT_SECRET", "skibididopdopyesyesaaaa")
   except FileExistsError:
     pass
   except Exception as error:

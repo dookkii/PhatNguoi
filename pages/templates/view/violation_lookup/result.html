@@ -35,7 +35,7 @@
         {% else %}
           {% if data.total %}
           <p class="has-text-danger is-size-4">
-            <b>Biển số {{ data.number_plate }} đã phát hiện {{ data.violations | length }} vi phạm!</b>
+            <b>Biển số {{ vehicle_type_dictionary[data.vehicle_type] }} {{ data.number_plate }} đã phát hiện {{ data.violations | length }} vi phạm!</b>
           </p>
           <div>
             <span class="tag is-success is-large py-2 mx-3 mt-2" style="height: 100%;">
@@ -55,16 +55,16 @@
           </div>
           {% else %}
           <p class="has-text-success is-size-4">
-            <b>Biển số {{ data.number_plate }} chưa phát hiện lỗi vi phạm!</b>
+            <b>Biển số {{ vehicle_type_dictionary[data.vehicle_type] }} {{ data.number_plate }} chưa phát hiện lỗi vi phạm!</b>
           </p>
           {% endif %}
-          <hr>
+          <hr class="my-5">
 
           <span>Thời gian cập nhật dữ liệu: <b>{{ data.time }}</b></span>
           <br>
           <span>Nguồn dữ liệu: <b>{{ data.source }}</b></span>
 
-          <hr>
+          <hr class="my-5">
 
           {% if data.total %}
           <div class="table-container has-text-left">
@@ -128,7 +128,7 @@
           </div>
           {% else %}
           <p>
-            Hiện tại, trên hệ thống chưa có thông tin vi phạm nào của biển số này.
+            Hiện tại, trên hệ thống chưa có thông tin vi phạm nào của biển số {{ vehicle_type_dictionary[data.vehicle_type] }} này.
           </p>
           {% endif %}
         {% endif %}

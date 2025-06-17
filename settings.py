@@ -1,13 +1,34 @@
+from pytz import all_timezones
+from pytz import timezone
+
+ALL_TIMEZONES = all_timezones
+
+# TomChienXu Note: The timezone should be included in the list of all_timezones.
+# You can find the list of all timezones here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+# Or you can "print(ALL_TIMEZONES)" to do the same thing.
+TIMEZONE = timezone("Asia/Ho_Chi_Minh")
+
 HOST = ""
 SERVER_NAME = ""
 PORT = 80
 DEBUG_STATUS = False
+USE_GEVENT = False
 USE_SSL_CONTEXT_ON_MAIN_SERVER = False
 SSL_CONTEXT = ("server.pem", "server-key.pem")
 SSL_CONTEXT_TO_USE = SSL_CONTEXT if USE_SSL_CONTEXT_ON_MAIN_SERVER else None
 USE_EVAL_EXECUTIONS = False
 ALLOWED_HOSTS = []
+
 DATABASE_FILENAME = "database"
+DATABASE_TYPE = "sqlite"
+SQLALCHEMY_DATABASE_URI = f"sqlite:///{DATABASE_FILENAME}.db"
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+OAUTH2_PROVIDER_NAME = "google"
+OAUTH2_SERVER_METADATA_URL = "https://accounts.google.com/.well-known/openid-configuration"
+OAUTH2_CLIENT_KEYWORD_ARGUMENTS = {
+  "scope": "openid profile email"
+}
 
 API_VERSION = 1
 RESTFUL_JSON_SETTINGS = {

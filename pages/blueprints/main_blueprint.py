@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request
-from flask import url_for
+from flask_login import current_user
 
 from helpers.flask_utility import TomChienXuOJ_redirect as redirect
 from helpers.flask_utility import TomChienXuOJ_render_template as render_template
@@ -27,10 +27,17 @@ def homepage():
   else:
     form = ViolationLookupForm()
 
+  if "submit_my_number_plate" in request.form:
+    form.is_my_plate = True
+
   if form.validate_on_submit():
-    bien_so_xe = form.number_plate.data
-    loai_xe = form.vehicle_type.data
-    
+    if "submit_my_number_plate" not in request.form:
+      bien_so_xe = form.number_plate.data
+      loai_xe = form.vehicle_type.data
+    else:
+      bien_so_xe = current_user.number_plate
+      loai_xe = str(current_user.vehicle_type)
+      
     thread = TomChienXuOJThread(target=safely_get_violations, args=(bien_so_xe, loai_xe))
     thread.start()
     data = thread.join(timeout=10)
@@ -39,10 +46,10 @@ def homepage():
       thread.join()
     
     if data is None:
-      return render_template("view/result.html", data=data)
+      return render_template("view/violation_lookup/result.html", data=data)
 
     if data.get("violations") is None:
-      return render_template("view/result.html", data=data)
+      return render_template("view/violation_lookup/result.html", data=data)
     
     data["total"] = len(data["violations"])
     data["number_of_unpaid"] = 0
@@ -53,7 +60,7 @@ def homepage():
 
     data["number_of_paid"] = data["total"] - data["number_of_unpaid"]
 
-    return render_template("view/result.html", data=data)
+    return render_template("view/violation_lookup/result.html", data=data)
 
   fields = [
     form.number_plate,
@@ -66,4 +73,4 @@ def homepage():
     field.label: field.errors for field in fields if field.errors
   }
 
-  return render_template("view/homepage.html", form=form, errors=errors)
+  return render_template("view/violation_lookup/homepage.html", form=form, errors=errors)

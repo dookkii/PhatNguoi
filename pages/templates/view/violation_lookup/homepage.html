@@ -50,45 +50,60 @@
 {% endif %}
 
 <div class="py-5">  
-  <form method="POST" id="lookup-form">
-    {{ form.csrf_token }}
+  <fieldset>
+    <form method="POST" id="lookup-form">
+      {{ form.csrf_token }}
 
-    <div class="columns">
-      <div class="column is-8">
-        <div class="field">
-          <label class="label">{{ form.number_plate.label }}:</label>
-          <div class="control">
-            {{ form.number_plate(class="input", placeholder="Nhập biển kiểm soát...") }}
+      <div class="columns">
+        <div class="column is-8">
+          <div class="field">
+            <label class="label">{{ form.number_plate.label }}:</label>
+            <div class="control">
+              {{ form.number_plate(class="input", placeholder="Nhập biển kiểm soát...") }}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="column is-4">
-        <div class="field ">
-          <label class="label">{{ form.vehicle_type.label }}:</label>
-          <div class="control">
-            <div class="select is-fullwidth">
-              {{ form.vehicle_type() }}
+        <div class="column is-4">
+          <div class="field ">
+            <label class="label">{{ form.vehicle_type.label }}:</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                {{ form.vehicle_type() }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    {% if USE_RECAPTCHA %}
-    <div class="has-text-centered mb-5">
-      {{ form.recaptcha() }}
-    </div> 
-    {% endif %}
+      {% if USE_RECAPTCHA %}
+      <div class="has-text-centered mb-5">
+        {{ form.recaptcha() }}
+      </div> 
+      {% endif %}
 
-    <div>
-      {{ form.submit(class="button is-link is-fullwidth", id="lookup-form-submit") }}
-    </div>
-  </form>
+      <div>
+        {% if current_user.is_authenticated %}
+        <div class="columns">
+          <div class="column is-8">
+            {{ form.submit(class="button is-link is-fullwidth", id="lookup-form-submit") }}
+          </div>
+          <div class="column is-4">
+            {{ form.submit_my_number_plate(class="button is-success is-fullwidth", id="lookup-mine-form-submit", formnovalidate=True) }}
+          </div>
+        </div>
+        {% else %}
+        <div>
+          {{ form.submit(class="button is-link is-fullwidth", id="lookup-form-submit") }}
+        </div>
+        {% endif %}
+      </div>
+    </form>
+  </fieldset>
 
   <div class="card mt-5">
     <div class="card-content">
       <div class="content">
-        <b>Developers' notes:</b> Một vài biển số xe ô tô cho mọi người nghịch: <b class="has-text-link">30X7431, 30K13784, 30F79635</b>.
+        <b>Developers' notes:</b> Một vài biển số xe ô tô cho mọi người nghịch: <b class="has-text-link">30X7431, 30K13784, 88A15902, 18C12406</b>.
       </div>
     </div>
   </div>
@@ -97,9 +112,17 @@
 
 {% block additional_scripts %}
 <script>
-  document.querySelector("#lookup-form").addEventListener("submit", () => {
+  function disableElement(element) {
+    element.style.opacity = "0.6";
+    element.style.pointerEvents = "none";
+  }
+  
+  document.querySelector("#lookup-form").addEventListener("submit", (element) => {
     let submitButton = document.querySelector("#lookup-form-submit");
-    submitButton.disabled = true;
+    let submitMineButton = document.querySelector("#lookup-mine-form-submit");
+
+    disableElement(submitButton);
+    disableElement(submitMineButton);
   })
 </script>
 {% endblock %}

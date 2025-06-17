@@ -29,3 +29,15 @@ footer {
 .g-recaptcha {
   display: inline-block;
 }
+
+.avatar img {
+  border-radius: 4px;
+}
+
+.avatar-column img {
+  border-radius: 12px;
+}
+
+hr {
+  margin-top: -0.3em;
+}

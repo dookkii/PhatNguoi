@@ -1,6 +1,7 @@
 {% from "helpers/header.html" import header %}
 {% from "helpers/tick.html" import tick, custom_tick %}
 {% from "helpers/pagination.html" import render_pagination %}
+{% from "helpers/vehicle_type.html" import vehicle_type_dictionary %}
 
 <!DOCTYPE html>
 <html data-theme="dark">
@@ -83,12 +84,41 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-link">
+              {% if current_user.is_authenticated %}
+              <div class="dropdown is-hoverable is-right">
+                <div class="dropdown-trigger">
+                  <a class="button is-light" href="{{ url_for('profile.my_profile') }}" aria-haspopup="true" aria-controls="navbar-dropdown-menu">
+                    <span class="icon avatar mr-1">
+                      {% if current_user.avatar_url %}
+                      <figure class="image">
+                        <img src="{{ current_user.avatar_url }}" alt="avatar">
+                      </figure>
+                      {% else %}
+                      <i class="fa-solid fa-user"></i>
+                      {% endif %}
+                    </span>
+                    <span>{{ current_user.name }}</span>
+                  </a>
+                  <div class="dropdown-menu" id="navbar-dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <a class="dropdown-item" href="{{ url_for('profile.my_profile') }}">Profile của tôi</a>
+                      <a class="dropdown-item" href="{{ url_for('profile.my_number_plate') }}">Biển số của tôi</a>
+                      <a class="dropdown-item" href="#">Tạo mật khẩu</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a class="button is-dark" href="{{ url_for('authentication.logout') }}">
+                Đăng xuất
+              </a>
+              {% else %}
+              <a class="button is-link" href="{{ url_for('authentication.oauth2_google.oauth2_google_login') }}">
                 Đăng ký
               </a>
-              <a class="button is-light">
+              <a class="button is-light" href="{{ url_for('authentication.oauth2_google.oauth2_google_login') }}">
                 Đăng nhập
               </a>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -127,7 +157,7 @@
             <br class="is-hidden-touch">
             
             <span class="icon-text">
-              <span><a href="https://facebook.com/mygfwouldbesomewhere">Facebook</a></span>
+              <span><a href="https://facebook.com/fumiko.tunaa">Facebook</a></span>
               <span class="icon">
                 <i class="fa-brands fa-facebook"></i>
               </span>
@@ -138,31 +168,9 @@
     </footer>
     {% endblock %}
   
-    <script>
-      if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-      };
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-        $navbarBurgers.forEach( el => {
-          el.addEventListener('click', () => {
-      
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
-      
-            el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-      
-          });
-        });
-      
-      });
-    </script>
-
-    {% block additional_scripts %}
-      
-    {% endblock %}
+    {% block additional_scripts %}{% endblock %}
   </body>
 </html>

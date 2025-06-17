@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Profile của tôi{% endblock %}
+
+{% block body %}
+<h1 class="title is-1">Profile của {{ current_user.name }}</h1>
+<hr>
+
+<div class="columns">
+  <div class="column is-2">
+    <div class="avatar-column has-text-centered">
+      <figure class="image is-fullwidth">
+        <img src="{{ current_user.avatar_url }}" />
+      </figure>
+      
+      <div class="mt-3">
+        <b class="is-size-5">{{ current_user.name }}</b>
+      </div>
+
+      <div class="mt-2">
+        {% if current_user.active %}
+        <span class="tag is-success">Active</span>
+        {% else %}
+        <span class="tag is-danger">Inactive (Limited)</span>
+        {% endif %}
+
+        {% if current_user.premium %}
+        <span class="tag is-info">Premium</span>
+        {% else %}
+        <span class="tag is-warning">Not Premium</span>
+        {% endif %}
+      </div>
+
+      <div class="mt-4">
+        <div class="buttons">
+          <button class="button is-fullwidth is-info">Tạo Password</button>
+          <button id="copy-api-key-button" class="button is-fullwidth is-success">Copy API Key</button>
+          <button class="button is-fullwidth is-danger">Reset API Key</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <h2 class="title is-2">Trạng thái tài khoản</h2>
+    <hr>
+    <ul>
+      <li>
+        Trạng thái kích hoạt: <b>
+          {% if current_user.active %}
+          <span class="tag is-success">Active</span> Đã được kích hoạt
+          {% else %}
+          <span class="tag is-danger">Inactive (Limited)</span> Chưa được kích hoạt (Bị hạn chế bởi Quản trị viên)
+          {% endif %}
+        </b>
+      </li>
+      <li>
+        Trạng thái Premium: <b>
+          {% if current_user.premium %}
+          <span class="tag is-info">Premium</span>
+          {% else %}
+          <span class="tag is-warning">Not Premium</span>
+          {% endif %}
+        </b>
+      </li>
+      <li>
+        Giao thức đăng nhập: <b>
+          {% if current_user.password %}
+          <span class="tag is-success">Password</span>
+          {% else %}
+          <span class="tag is-danger">Password</span>
+          {% endif %}
+
+          {% if current_user.oauth2_token %}
+          <span class="tag is-success">Google OAuth2</span>
+          {% else %}
+          <span class="tag is-danger">Google OAuth2</span>
+          {% endif %}
+        </b>
+      </li>
+    </ul>
+
+    {% if not (current_user.password and current.oauth2_token) %}
+    <article class="message is-warning mt-4">
+      <div class="message-body">
+        Hiện tại, tài khoản của bạn chỉ có thể được đăng nhập bằng <b>{% if current_user.password %}mật khẩu{% else %}Google OAuth2{% endif %}</b>! Hãy thiết lập thêm giao thức đăng nhập còn lại để tăng cường bảo mật cho tài khoản của bạn cũng như để có thể dễ dàng linh hoạt đăng nhập bằng cả hai phương thức này.
+      </div>
+    </article>
+    {% endif %}
+
+    <h2 class="mt-6 title is-2">Thông tin</h2>
+    <hr>
+    <ul>
+      <li>
+        Database ID: <b>{{ current_user.id }}</b>
+      </li>
+      <li>
+        Họ và tên: <b>{{ current_user.name }}</b>
+      </li>
+      <li>
+        Email: <b>{{ current_user.email }}</b>
+      </li>
+      <li>
+        Tài khoản được tạo lúc: <b>{{ current_user.arrow_created_at.format() }}</b>
+      </li>
+    </ul>
+
+    <h2 class="mt-6 title is-2">API</h2>
+    <hr>
+    <article class="message is-danger">
+      <div class="message-body">
+        Đừng chia sẻ API Key của bạn với bất kỳ ai. Nếu bạn nghi ngờ rằng API Key của mình đã bị lộ, hãy reset nó ngay lập tức.
+      </div>
+    </article>
+    <ul>
+      <li>
+        API Key: <b>{{ current_user.api_key }}</b>
+      </li>
+      <li>
+        API Key đã được dùng <b>{{ current_user.api_key_usage_count }}</b> lần.
+      </li>
+      <li>
+        API Key được tạo lúc: <b>{{ current_user.arrow_api_key_created_at.format() }}</b>.
+      </li>
+      <li>
+        API Key đã được reset <b>{{ current_user.api_key_reset_count }}</b> lần.
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+  document.querySelector("#copy-api-key-button").addEventListener("click", () => {
+    copyToClipboard("{{ current_user.api_key }}");
+    Swal.fire({
+      icon: "success",
+      title: "Đã sao chép API Key",
+      text: "API Key của bạn đã được sao chép vào clipboard.",
+      theme: "dark",
+    });
+  });
+</script>
+{% endblock %}

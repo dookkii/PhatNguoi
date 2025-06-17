@@ -128,6 +128,7 @@ def safely_get_violations(bien_so_xe, loai_xe):
     "oto": 1,
     "xemay": 2,
     "xedap": 3,
+    "xedapdien": 3
   }.get(loai_xe.strip(), 1)
 
   session = ViolationDataPostSession(dict(BienKS=bien_so_xe, Xe=loai_xe))

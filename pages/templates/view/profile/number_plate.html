@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Biển số của tôi{% endblock %}
+
+{% block body %}
+<h1 class="title is-1">Biển số của {{ current_user.name }}</h1>
+<hr>
+
+{% if success %}
+<article class="message is-success">
+  <div class="message-body">
+    <div class="content">
+      Biển số xe của bạn đã được cập nhật thành công!
+    </div>
+  </div>
+</article>
+{% endif %}
+
+{% if errors | length > 0 %}
+<article class="message is-danger">
+  <div class="message-body">
+    {% for field, errors_of_field in errors.items() %}
+      <b>{{ field }}</b>:
+      <ul>
+        {% for error in errors_of_field %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% if not loop.last %}
+      <br>
+      {% endif %}
+    {% endfor %}
+  </div>
+</article>
+{% endif %}
+
+<article class="message is-link">
+  <div class="message-body">
+    <div class="content">
+      <p>Dữ liệu hiện tại:</p>
+      <ul>
+        <li><b>Biển số:</b> {{ current_user.number_plate }}</li>
+        <li><b>Loại xe:</b> {{ vehicle_type_dictionary[current_user.vehicle_type].upper() }}</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<fieldset>
+  <form method="POST" id="saving-form">
+    {{ form.csrf_token }}
+
+    <div class="columns">
+      <div class="column is-8">
+        <div class="field">
+          <label class="label">{{ form.number_plate.label }}:</label>
+          <div class="control">
+            {{ form.number_plate(class="input", placeholder="Nhập biển kiểm soát...") }}
+          </div>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="field ">
+          <label class="label">{{ form.vehicle_type.label }}:</label>
+          <div class="control">
+            <div class="select is-fullwidth">
+              {{ form.vehicle_type() }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if USE_RECAPTCHA %}
+    <div class="has-text-centered mb-5">
+      {{ form.recaptcha() }}
+    </div> 
+    {% endif %}
+
+    <div>
+      {{ form.submit(class="button is-link is-fullwidth", id="saving-form-submit") }}
+    </div>
+  </form>
+</fieldset>
+
+{% endblock %}
