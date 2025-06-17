@@ -19,7 +19,7 @@ blueprint = Blueprint("profile", __name__)
 @blueprint.route("/")
 @login_required
 def index():
-  return redirect(url_for("profile.my_profile"))
+  return redirect(url_for("main.profile.my_profile"))
 
 @blueprint.route("/me")
 @login_required

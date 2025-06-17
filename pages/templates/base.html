@@ -101,21 +101,21 @@
                   </a>
                   <div class="dropdown-menu" id="navbar-dropdown-menu" role="menu">
                     <div class="dropdown-content">
-                      <a class="dropdown-item" href="{{ url_for('profile.my_profile') }}">Profile của tôi</a>
-                      <a class="dropdown-item" href="{{ url_for('profile.my_number_plate') }}">Biển số của tôi</a>
+                      <a class="dropdown-item" href="{{ url_for('main.profile.my_profile') }}">Profile của tôi</a>
+                      <a class="dropdown-item" href="{{ url_for('main.profile.my_number_plate') }}">Biển số của tôi</a>
                       <a class="dropdown-item" href="#">Tạo mật khẩu</a>
                     </div>
                   </div>
                 </div>
               </div>
-              <a class="button is-dark" href="{{ url_for('authentication.logout') }}">
+              <a class="button is-dark" href="{{ url_for('main.authentication.logout') }}">
                 Đăng xuất
               </a>
               {% else %}
-              <a class="button is-link" href="{{ url_for('authentication.oauth2_google.oauth2_google_login') }}">
+              <a class="button is-link" href="{{ url_for('main.authentication.oauth2_google.oauth2_google_login') }}">
                 Đăng ký
               </a>
-              <a class="button is-light" href="{{ url_for('authentication.oauth2_google.oauth2_google_login') }}">
+              <a class="button is-light" href="{{ url_for('main.authentication.oauth2_google.oauth2_google_login') }}">
                 Đăng nhập
               </a>
               {% endif %}

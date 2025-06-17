@@ -28,7 +28,7 @@ def logout():
 
 @oauth2_google_blueprint.route("/login")
 def oauth2_google_login():
-  redirect_uri = url_for("authentication.oauth2_google.oauth2_google_authorize", _external=True)
+  redirect_uri = url_for("main.authentication.oauth2_google.oauth2_google_authorize", _external=True)
   return google_oauth2.authorize_redirect(redirect_uri)
 
 @oauth2_google_blueprint.route("/authorize")
