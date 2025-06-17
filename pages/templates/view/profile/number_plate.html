@@ -39,8 +39,8 @@
     <div class="content">
       <p>Dữ liệu hiện tại:</p>
       <ul>
-        <li><b>Biển số:</b> {{ current_user.number_plate }}</li>
-        <li><b>Loại xe:</b> {{ vehicle_type_dictionary[current_user.vehicle_type].upper() }}</li>
+        <li><b>Biển số:</b> {{ current_user.number_plate if current_user.number_plate else "Không có dữ liệu!" }}</li>
+        <li><b>Loại xe:</b> {{ vehicle_type_dictionary[current_user.vehicle_type].upper() if vehicle_type_dictionary[current_user.vehicle_type] else "Không có dữ liệu!" }}</li>
       </ul>
     </div>
   </div>

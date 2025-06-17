@@ -82,7 +82,7 @@
       {% endif %}
 
       <div>
-        {% if current_user.is_authenticated %}
+        {% if current_user.is_authenticated and current_user.number_plate and current_user.vehicle_type %}
         <div class="columns">
           <div class="column is-8">
             {{ form.submit(class="button is-link is-fullwidth", id="lookup-form-submit") }}
