@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  margin-bottom: 100px;
+  margin-bottom: 200px;
   word-wrap: break-word;
 }
 
@@ -40,4 +40,12 @@ footer {
 
 hr {
   margin-top: -0.3em;
+}
+
+.navbar .dropdown {
+  position: relative;
+}
+
+.navbar-menu {
+  overflow: visible!important;
 }

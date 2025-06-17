@@ -87,7 +87,7 @@
               {% if current_user.is_authenticated %}
               <div class="dropdown is-hoverable is-right">
                 <div class="dropdown-trigger">
-                  <a class="button is-light" href="{{ url_for('profile.my_profile') }}" aria-haspopup="true" aria-controls="navbar-dropdown-menu">
+                  <a class="button is-light" href="javascript:void(0)" aria-haspopup="true" aria-controls="navbar-dropdown-menu">
                     <span class="icon avatar mr-1">
                       {% if current_user.avatar_url %}
                       <figure class="image">
@@ -169,7 +169,7 @@
     {% endblock %}
   
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('main.static', filename='js/index.js') }}"></script>
 
     {% block additional_scripts %}{% endblock %}
   </body>
