@@ -1,6 +1,8 @@
 flask
 flask-restful
 flask-wtf
+flask_sqlalchemy
+flask_login
 requests
 beautifulsoup4
 pillow
@@ -8,3 +10,5 @@ pytesseract
 python-dotenv
 gunicorn
 gevent
+authlib
+arrow
