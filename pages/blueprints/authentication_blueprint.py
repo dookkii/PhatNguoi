@@ -9,6 +9,7 @@ from authlib.integrations.base_client.errors import MismatchingStateError
 
 from helpers.api_key import generate_api_key
 from helpers.flask_utility import TomChienXuOJ_redirect as redirect
+from helpers.flask_utility import get_request_public_ip
 from helpers.url import clean_google_avatar_image_url
 
 from models import User
@@ -56,7 +57,7 @@ def oauth2_google_authorize():
       user.token = token.get("access_token")
 
     user.last_login = utcnow().datetime
-    user.last_ip = request.remote_addr
+    user.last_ip = get_request_public_ip()
     database.session.commit()
     
     login_user(user)
