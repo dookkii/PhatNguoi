@@ -19,12 +19,15 @@ def TomChienXuOJ_redirect(location, code=302, *args, **kwargs):
 
 def get_request_public_ip():
   x_real_ip = request.headers.get("X-Real-IP")
+  print("x_real_ip IP", x_real_ip)
   
   if x_real_ip:
     return x_real_ip.strip()
   else:
     x_forwarded_for_ips = request.headers.get("X-Forwarded-For").split(",")
     n = len(x_forwarded_for_ips)
+    
+    print("x_forwarded_for_ips", x_forwarded_for_ips)
     
     if n >= 2:
       return x_forwarded_for_ips[1].strip()
